@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Regresivo</title>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: transparent;
+          
+
+           
+            font-family: 'Lora', serif;
+            color: #9c6fbc;
+          
+        }
+
+        #countdown {
+            display: flex;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.05);
+           
+            padding: 15px 20px;
+            border-radius: 12px;
+            min-width: 80px;
+        }
+
+        .time-box span {
+            font-size: 3.5rem;
+            line-height: 1;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        #mensaje {
+            display: none;
+            font-size: 4rem;
+            text-transform: uppercase;
+            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+      
+        @media (max-width: 600px) {
+            .time-box span {
+                font-size: 2rem;
+            }
+
+            .time-box {
+                min-width: 50px;
+                padding: 10px;
+            }
+
+            #mensaje {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+   
+    <div id="countdown">
+        <div class="time-box">
+            <span id="dias">00</span>
+            <div class="label">Días</div>
+        </div>
+        <div class="time-box">
+            <span id="horas">00</span>
+            <div class="label">Horas</div>
+        </div>
+        <div class="time-box">
+            <span id="minutos">00</span>
+            <div class="label">Minutos</div>
+        </div>
+        <div class="time-box">
+            <span id="segundos">00</span>
+            <div class="label">Segundos</div>
+        </div>
+    </div>
+
+ 
+    <div id="mensaje">¡Es Hoy!</div>
+
+    <script>
+       
+        const fechaObjetivo = new Date(2026, 8, 25, 15, 45, 0).getTime();
+
+        const actualizarContador = setInterval(function () {
+            const ahora = new Date().getTime();
+            const distancia = fechaObjetivo - ahora;
+
+          
+            if (distancia < 0) {
+                clearInterval(actualizarContador);
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("mensaje").style.display = "block";
+                return;
+            }
+
+            const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+         
+            document.getElementById("dias").innerText = dias.toString().padStart(2, '0');
+            document.getElementById("horas").innerText = horas.toString().padStart(2, '0');
+            document.getElementById("minutos").innerText = minutos.toString().padStart(2, '0');
+            document.getElementById("segundos").innerText = segundos.toString().padStart(2, '0');
+
+        }, 1000);
+    </script>
+</body>
+
+</html>
